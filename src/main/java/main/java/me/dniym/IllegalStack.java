@@ -117,7 +117,6 @@ public class IllegalStack extends JavaPlugin {
             IllegalStack.getPlugin().writeConfig();
         }
 
-        IllegalStack.getPlugin().updateConfig();
         IllegalStack.getPlugin().loadConfig();
         IllegalStack.getPlugin().loadMsgs();
         StartupPlugin();
@@ -437,7 +436,6 @@ public class IllegalStack extends JavaPlugin {
         this.setPlugin(this);
         setVersion();
         loadConfig();
-        updateConfig();
         loadMsgs();
         checkForHybridEnvironment();
         checkForPaperServer();
@@ -698,93 +696,6 @@ public class IllegalStack extends JavaPlugin {
             Class.forName("org.bukkit.entity.ChestedHorse");
             hasChestedAnimals = true;
         } catch (ClassNotFoundException ignored) {
-        }
-    }
-
-    private void updateConfig() {
-        File conf = new File(getDataFolder(), "config.yml");
-        FileConfiguration config = this.getConfig();
-        HashMap<String, Object> added = new HashMap<>();
-
-        for (Protections p : Protections.values()) {
-            if (!p.getCommand().isEmpty()) {
-                continue;
-            }
-            if (p.isRelevantToVersion(getVersion())) {
-                if (config.getString(p.getConfigPath()) == null) {
-                    if (p.getConfigValue() instanceof Boolean) {
-                        p.setEnabled((Boolean) p.getDefaultValue());
-                    }
-                    added.put(p.getConfigPath(), p.getDefaultValue());
-                }
-                for (Protections child : p.getChildren()) {
-                    if (config.getString(child.getConfigPath()) == null) {
-
-                        if (child.getConfigValue() instanceof Boolean) {
-                            child.setEnabled((Boolean) child.getDefaultValue());
-                        }
-                        added.put(child.getConfigPath(), child.getDefaultValue());
-                    }
-                }
-            } else if (config.getString(p.getConfigPath()) != null) {
-                if (p.getVersion().isEmpty()) //handling a child node
-                {
-                    Protections parent = Protections.getParentByChild(p);
-                    if (parent == null || !parent.isRelevantToVersion(getVersion())) {
-                        added.put(p.getConfigPath(), null);
-                    }
-                } else {
-                    added.put(p.getConfigPath(), null);
-                    for (Protections child : p.getChildren()) {
-                        added.put(child.getConfigPath(), null);
-                    }
-                }
-            }
-        }
-
-        boolean updated = false;
-        if (config.getString("UserRequested.Obscure.HackedShulker.RemoveOnChunkLoad") != null) {
-            config.set("UserRequested.Obscure.HackedShulker.RemoveOnChunkLoad", null);
-        }
-        if (config.getString("Exploits.Enchants.AllowOpBypass") != null) {
-            config.set("Exploits.Enchants.AllowOpBypass", null);
-        }
-
-        for (String key : added.keySet()) {
-            if (added.get(key) == null) {
-                LOGGER.info(
-                        "Found an old configuration value that is no longer used or not relevant to your server version: {} it has been removed from the config.",
-                        key
-                );
-                config.set(key, null);
-            } else {
-                LOGGER.info(
-                        "Found a missing configuration value {} it has been added to the config with the default value of: {}",
-                        key,
-                        added.get(key)
-                );
-                config.set(key, added.get(key));
-                Protections p = Protections.findByConfig(key);
-                if (p != null && (added.get(key) instanceof Boolean)) {
-                    p.setEnabled((Boolean) added.get(key));
-                }
-                if (p == Protections.AlsoPreventHeadInside && Material.matchMaterial("COMPOSTER") != null) {
-                    Protections.AlsoPreventHeadInside.addTxtSet("COMPOSTER", null);
-                }
-
-
-            }
-            updated = true;
-        }
-
-        if (updated) {
-            try {
-                config.save(conf);
-            } catch (IOException e1) {
-
-                // TODO Auto-generated catch block
-                LOGGER.error("Failed to update config!", e1);
-            }
         }
     }
 

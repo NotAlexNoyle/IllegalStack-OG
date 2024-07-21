@@ -33,8 +33,6 @@ import main.java.me.dniym.IllegalStack;
 import main.java.me.dniym.utils.MagicHook;
 import main.java.me.dniym.utils.NBTStuff;
 import main.java.me.dniym.utils.SpigotMethods;
-//import me.jet315.minions.MinionAPI;
-//import me.jet315.minions.minions.Minion;
 import net.brcdev.shopgui.gui.gui.OpenGui;
 
 public enum Protections {
@@ -2566,12 +2564,6 @@ public enum Protections {
 
     public boolean isThirdPartyObject(Entity entity) {
 
-/*        if (IllegalStack.getPlugin().getServer().getPluginManager().getPlugin("JetsMinions") != null) {
-            boolean minion = MinionAPI.isMinion(entity);
-            if (minion) {
-                return true;
-            } 
-        } */
         if(entity instanceof LivingEntity && SpigotMethods.isNPC((LivingEntity)entity))
         	return true;
         

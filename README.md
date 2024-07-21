@@ -1,11 +1,14 @@
-# IllegalStack
-A spigot based plugin dedicated to fixing glitches and exploits that have made it into final Minecraft releases.
+# IllegalStack-OG
 
-## Links
-(NOTE: CONCERNING CUSTOM OR UNRELEASED OR SPECIAL BUILDS OR JARS.  THE ONLY PLACE YOU SHOULD EVER DOWNLOAD THIS OR ANY OTHER PLUGIN IS DIRECTLY FROM THE AUTHORS LINKS.  NEVER TRUST SOMEONE THAT RANDOMLY MESSAGES YOU OR JOINS YOUR SERVER CLAIMING TO HAVE A NEW VERSION AS IT WILL LIKELY CONTAIN MALICIOUS CODE TO TAKE OVER OR DESTROY YOUR SERVER!)
-- [Spigot](https://www.spigotmc.org/resources/dupe-fixes-illegal-stack-remover.44411/) <- OFFICIAL DOWNLOAD LINK
-- [Wiki](https://github.com/dniym/IllegalStack/wiki/FAQ)
-- [Discord](https://discord.gg/Gsx4QaT)
+A fork of IllegalStack maintained by [TrueOG Network](https://true-og.net). IllegalStack is a spigot based plugin dedicated to fixing glitches and exploits that have made it into final Minecraft releases.
+
+## Changes from IllegalStack:
+
+- Completely removed references to proprietary JetsMinions API.
+
+- Disabled config updates.
+
+- Updated gradle from 8.1.1 to 8.8.
 
 ## Building this project
 
