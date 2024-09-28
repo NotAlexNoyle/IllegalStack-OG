@@ -87,7 +87,7 @@ public class TrackedProjectile {
 				}
 			}
 		}
-//		System.out.println("There are " + trackedProjectiles.size() + " projectiles being tracked");
+//		IllegalStack.getLogger("There are " + trackedProjectiles.size() + " projectiles being tracked");
 		trackedProjectiles.removeAll(removed);
 
 		
