@@ -9,8 +9,6 @@ import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -27,7 +25,6 @@ import java.util.Date;
 public class Log {
 
 	private final static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy HH:mm:ss");
-    private static final Logger LOGGER = LogManager.getLogger("IllegalStack/" + Log.class.getSimpleName());
     IllegalStack plugin;
     File file;
     
@@ -58,7 +55,7 @@ public class Log {
 
         if (Protections.LogOffensesInSeparateFile.isEnabled()) {
             try {
-                LOGGER.info(message);
+                IllegalStack.getLogger(message);
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
                 bw.append(dateStamp() + " - ").append(message).append("\r\n");
                 bw.close();
@@ -66,7 +63,7 @@ public class Log {
                 e.printStackTrace();
             }
         } else {
-            LOGGER.info(message);
+        	IllegalStack.getLogger(message);
         }
 
         if (Protections.InGameNotifications.isEnabled()) {
@@ -101,9 +98,9 @@ public class Log {
             int z = Integer.parseInt(coords[4]);
             position = "/istack teleport " + x + " " + y + " " + z + " " + ChatColor.stripColor(coords[1]);
         } catch (NumberFormatException ex) {
-            LOGGER.error("Failed to get position");
+        	IllegalStack.getLogger("Failed to get position");
             for (int i = 0; i < coords.length; i++) {
-                LOGGER.error("Coord: {} {}", i, coords[i]);
+            	IllegalStack.getLogger("Coord: " + i + " " + coords[i]);
             }
         }
         return position;
@@ -158,7 +155,7 @@ public class Log {
 
         if (Protections.LogOffensesInSeparateFile.isEnabled()) {
             try {
-                LOGGER.info("(Notification Only) {} {}", prot.name(), message);
+            	IllegalStack.getLogger("(Notification Only) " + prot.name() + " " + message);
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
                 bw.append(dateStamp()).append(message).append("\r\n");
                 bw.close();
@@ -166,7 +163,7 @@ public class Log {
                 e.printStackTrace();
             }
         } else {
-            LOGGER.info("(Notification Only) {}", message);
+        	IllegalStack.getLogger("(Notification Only) " + message);
         }
 
         if (Protections.LogOffensesInSeparateFile.isEnabled()) {
